@@ -1,305 +1,906 @@
 <!DOCTYPE html>
-<html lang="pt-BR" id="kubio">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>VI ERAD | ERAMIA-NO2 2026 – Sociedade Brasileira de Computação</title>
   <link rel="icon" href="assets/images/logo_ERAMIA-NO.png" type="image/png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="assets/css/sbc-erad-eramia.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800&display=swap');
+
+    :root {
+      /* Cores extraídas diretamente das logos oficiais ERAD-NO2 e ERAMIA-NO2 */
+      --cor-neon: #00fb00;
+      --cor-neon-puro: #00ff00;
+      --cor-primaria: #007d00;
+      --cor-secundaria: #007800;
+      --cor-escura: #003700;
+      --cor-preto: #000600;
+      --cor-fundo-suave: #f2f9f3;
+      --cor-texto: #1e2b21;
+      --cor-borda: #cce3d0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Mulish', Helvetica, Arial, sans-serif;
+      color: var(--cor-texto);
+      background-color: #ffffff;
+      line-height: 1.6;
+    }
+
+    /* TOPBAR INSTITUCIONAL */
+    .sbc-topbar {
+      background-color: var(--cor-escura);
+      color: #ffffff;
+      border-bottom: 2px solid var(--cor-neon);
+      padding: 8px 20px;
+      font-size: 13px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .topbar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .badge-neon {
+      background-color: var(--cor-neon);
+      color: var(--cor-preto);
+      font-weight: 800;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      margin-right: 8px;
+    }
+    .social-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .social-links a {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .social-links a:hover {
+      background-color: var(--cor-neon);
+      color: var(--cor-preto);
+    }
+
+    /* NAVEGAÇÃO PRINCIPAL POR PÁGINAS/ABAS */
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #dedede;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .logo-wrap img {
+      height: 50px;
+      width: auto;
+      object-fit: contain;
+    }
+    .logo-title strong {
+      display: block;
+      color: var(--cor-escura);
+      font-size: 17px;
+      font-weight: 800;
+    }
+    .logo-title small {
+      color: var(--cor-primaria);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .nav-menu button, .nav-menu a {
+      background: transparent;
+      border: none;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 12.5px;
+      text-transform: uppercase;
+      color: var(--cor-preto);
+      padding: 10px 13px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .nav-menu button:hover, .nav-menu button.active {
+      background-color: var(--cor-primaria);
+      color: #ffffff;
+    }
+    .nav-menu a.btn-ecos {
+      background-color: var(--cor-neon);
+      color: var(--cor-preto);
+      font-weight: 800;
+    }
+    .nav-menu a.btn-ecos:hover {
+      background-color: var(--cor-escura);
+      color: var(--cor-neon);
+    }
+
+    /* HERO */
+    .hero {
+      background: radial-gradient(circle at 80% 25%, var(--cor-primaria) 0%, var(--cor-escura) 48%, var(--cor-preto) 100%);
+      color: #ffffff;
+      padding: 52px 20px;
+      border-bottom: 4px solid var(--cor-neon);
+      position: relative;
+    }
+    .hero-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.4fr 0.85fr;
+      gap: 32px;
+      align-items: center;
+    }
+    .hero-kicker {
+      display: inline-block;
+      background: rgba(0, 251, 0, 0.14);
+      border: 1px solid var(--cor-neon);
+      color: var(--cor-neon);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 4px;
+      margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .hero h1 span { color: var(--cor-neon); }
+    .hero p {
+      color: #e6f7e8;
+      margin-bottom: 22px;
+      font-size: 1.05rem;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .hero-meta span {
+      background: rgba(0, 6, 0, 0.5);
+      border: 1px solid rgba(0, 251, 0, 0.4);
+      padding: 8px 14px;
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .hero-meta i { color: var(--cor-neon); margin-right: 6px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn-primary {
+      background-color: var(--cor-neon);
+      color: var(--cor-preto);
+      border: 2px solid var(--cor-neon);
+      padding: 13px 24px;
+      border-radius: 5px;
+      font-weight: 800;
+      font-size: 13px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary:hover { background: #ffffff; border-color: #ffffff; color: var(--cor-escura); }
+    .btn-outline {
+      background: transparent;
+      color: #ffffff;
+      border: 2px solid var(--cor-neon);
+      padding: 13px 24px;
+      border-radius: 5px;
+      font-weight: 800;
+      font-size: 13px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-outline:hover { background: var(--cor-neon); color: var(--cor-preto); }
+    .hero-logos {
+      background: #ffffff;
+      border: 2px solid var(--cor-neon);
+      border-radius: 10px;
+      padding: 24px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+    }
+    .hero-logos img { max-height: 135px; width: auto; object-fit: contain; }
+
+    /* PÁGINAS SEPARADAS (SPA TABS) */
+    .page-view { display: none; padding: 48px 20px; }
+    .page-view.active { display: block; animation: fadeIn 0.25s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    .section-header {
+      border-left: 5px solid var(--cor-primaria);
+      padding-left: 16px;
+      margin-bottom: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .section-header h2 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--cor-escura);
+    }
+
+    /* CARDS & GRIDS */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 22px;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid var(--cor-borda);
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 55, 0, 0.12);
+      border-color: var(--cor-primaria);
+    }
+    .card-top {
+      background: linear-gradient(135deg, var(--cor-escura), var(--cor-primaria));
+      color: #ffffff;
+      padding: 15px 18px;
+      border-bottom: 3px solid var(--cor-neon);
+      font-weight: 800;
+      font-size: 13px;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card-top i { color: var(--cor-neon); font-size: 16px; }
+    .card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+    .card-body h3 { color: var(--cor-escura); font-size: 1.15rem; margin-bottom: 8px; }
+    .card-body p { font-size: 0.94rem; color: #364739; margin-bottom: 16px; flex: 1; }
+    .btn-card {
+      align-self: flex-start;
+      background-color: var(--cor-primaria);
+      color: #ffffff;
+      padding: 9px 15px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-card:hover { background-color: var(--cor-escura); color: var(--cor-neon); }
+
+    /* COMISSÃO ORGANIZADORA */
+    .comissao-card {
+      background: var(--cor-fundo-suave);
+      border: 1px solid var(--cor-borda);
+      border-left: 5px solid var(--cor-primaria);
+      border-radius: 6px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .comissao-card h3 { color: var(--cor-escura); font-size: 1.15rem; font-weight: 800; }
+    .comissao-inst {
+      display: inline-block;
+      background: #e1f7e4;
+      color: var(--cor-escura);
+      font-weight: 700;
+      font-size: 12.5px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-top: 6px;
+    }
+
+    /* ARTIGOS APROVADOS */
+    .search-bar-box {
+      background: var(--cor-fundo-suave);
+      border: 1px solid var(--cor-borda);
+      padding: 18px;
+      border-radius: 6px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+    .search-bar-box input {
+      flex: 1;
+      min-width: 260px;
+      padding: 11px 14px;
+      border: 1px solid #b5d4ba;
+      border-radius: 4px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+    .search-bar-box input:focus { outline: 2px solid var(--cor-primaria); }
+    .count-badge {
+      background: var(--cor-escura);
+      color: var(--cor-neon);
+      font-weight: 800;
+      padding: 8px 14px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    .paper-item {
+      background: #ffffff;
+      border: 1px solid var(--cor-borda);
+      border-left: 4px solid var(--cor-primaria);
+      border-radius: 5px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      transition: border-color 0.2s ease;
+    }
+    .paper-item:hover { border-left-color: var(--cor-neon); background: #fafdfb; }
+    .paper-title {
+      font-weight: 800;
+      color: var(--cor-escura);
+      font-size: 1.03rem;
+      margin-bottom: 6px;
+    }
+    .paper-authors {
+      font-size: 0.92rem;
+      color: #3a4d3e;
+    }
+
+    /* TABELAS PROGRAMAÇÃO E INSCRIÇÕES */
+    .table-sbc {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 24px;
+      background: #ffffff;
+      border: 1px solid var(--cor-borda);
+    }
+    .table-sbc th {
+      background: var(--cor-escura);
+      color: #ffffff;
+      text-align: left;
+      padding: 12px 14px;
+      font-size: 13px;
+      text-transform: uppercase;
+      border-bottom: 3px solid var(--cor-neon);
+    }
+    .table-sbc td {
+      padding: 11px 14px;
+      border-bottom: 1px solid #e6f2e8;
+      font-size: 14px;
+    }
+    .table-sbc tr:nth-child(even) { background: var(--cor-fundo-suave); }
+
+    /* RODAPÉ */
+    footer {
+      background-color: var(--cor-preto);
+      color: #d1e3d4;
+      border-top: 4px solid var(--cor-primaria);
+      padding: 40px 20px 24px;
+      font-size: 14px;
+    }
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 28px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .footer-grid h4 {
+      color: var(--cor-neon);
+      font-size: 14px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .footer-grid a {
+      color: #e6f7e8;
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 5px;
+    }
+    .footer-grid a:hover { color: var(--cor-neon); }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 18px auto 0;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 13px;
+      color: #9cb3a0;
+    }
+
+    @media (max-width: 850px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2rem; }
+    }
+  </style>
 </head>
-<body class="home wp-theme-kubio">
-  <div id="page-top" tabindex="-1"></div>
+<body>
 
-  <div class="wp-site-blocks">
-<!-- TOPBAR INSTITUCIONAL SBC -->
-<div class="sbc-topbar">
-  <div class="h-section-boxed-container sbc-topbar-inner">
-    <div class="sbc-topbar-tag">
-      <span class="badge-neon">Evento Regional SBC</span>
-      <span>Sociedade Brasileira de Computação • Região Norte 2</span>
-    </div>
-    <div class="sbc-social-icons">
-      <a href="https://www.instagram.com/eraderamia_no2/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.facebook.com/erad.eramia.no2" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://www.youtube.com/channel/UCKwmp3FBjyOh47VYIpwZYsQ" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-      <a href="https://www.sbc.org.br/" target="_blank" rel="noopener" title="Portal SBC"><i class="fas fa-globe"></i></a>
+  <!-- TOPBAR -->
+  <div class="sbc-topbar">
+    <div class="container topbar-inner">
+      <div>
+        <span class="badge-neon">Evento Regional SBC</span>
+        <span>Sociedade Brasileira de Computação • Região Norte 2</span>
+      </div>
+      <div class="social-links">
+        <a href="https://www.instagram.com/erad.eramia.no2/" target="_blank" rel="noopener">
+          <i class="fab fa-instagram"></i> @erad.eramia.no2
+        </a>
+        <a href="https://www.youtube.com/channel/UCKwmp3FBjyOh47VYIpwZYsQ" target="_blank" rel="noopener">
+          <i class="fab fa-youtube"></i> YouTube
+        </a>
+        <a href="https://www.sbc.org.br/" target="_blank" rel="noopener">
+          <i class="fas fa-globe"></i> Portal SBC
+        </a>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- HEADER E MENU PRINCIPAL (Estrutura Kubio Navigation) -->
-<header class="wp-block-kubio-navigation-section">
-  <div class="kubio-nav-inner">
-    <a href="#page-top" class="kubio-logo-wrap">
-      <img src="assets/images/logo_ERAD-NO.png" alt="Logo ERAD-NO2" />
-      <img src="assets/images/logo_ERAMIA-NO.png" alt="Logo ERAMIA-NO2" />
-      <div class="kubio-logo-title">
-        <strong>VI ERAD | ERAMIA-NO2</strong>
-        <small>2026 • Macapá - AP</small>
+  <!-- HEADER & MENU DE PÁGINAS SEPARADAS -->
+  <header>
+    <div class="nav-inner">
+      <div class="logo-wrap" onclick="showPage('inicio')">
+        <img src="assets/images/logo_ERAD-NO.png" alt="Logo ERAD-NO2" />
+        <img src="assets/images/logo_ERAMIA-NO.png" alt="Logo ERAMIA-NO2" />
+        <div class="logo-title">
+          <strong>VI ERAD | ERAMIA-NO2</strong>
+          <small>2026 • Macapá - AP</small>
+        </div>
       </div>
-    </a>
 
-    <nav class="kubio-menu" aria-label="Menu Principal">
-      <ul>
-        <li class="current_page_item"><a href="#sobre">O Evento</a></li>
-        <li><a href="#chamadas">Chamadas &amp; Artigos</a></li>
-        <li><a href="#programacao">Programação</a></li>
-        <li><a href="#local">Local</a></li>
-        <li class="btn-nav-ecos"><a href="https://centraldesistemas.sbc.org.br/ecos/eradeeramiano22026" target="_blank" rel="noopener">Inscrições ECOS</a></li>
+      <ul class="nav-menu">
+        <li><button class="tab-btn active" data-target="inicio" onclick="showPage('inicio')">Início</button></li>
+        <li><button class="tab-btn" data-target="comissao" onclick="showPage('comissao')">Comissão Organizadora</button></li>
+        <li><button class="tab-btn" data-target="aprovados" onclick="showPage('aprovados')">Artigos Aprovados</button></li>
+        <li><button class="tab-btn" data-target="programacao" onclick="showPage('programacao')">Programação</button></li>
+        <li><button class="tab-btn" data-target="inscricoes" onclick="showPage('inscricoes')">Inscrições</button></li>
+        <li><button class="tab-btn" data-target="links" onclick="showPage('links')">Links &amp; Edições</button></li>
+        <li><a href="https://centraldesistemas.sbc.org.br/ecos/eradeeramiano22026" target="_blank" rel="noopener" class="btn-ecos">ECOS SBC</a></li>
       </ul>
-    </nav>
-  </div>
-</header>
-
-
-    <!-- 3. SUPER BANNER / HERO -->
-    <section class="sbc-smartslider-hero">
-      <div class="hero-grid">
-        <div>
-          <span class="hero-kicker">Artigos Aceitos • Resultado Divulgado!</span>
-          <h1>VI ERAD | <span>ERAMIA-NO2</span> 2026</h1>
-          <p class="hero-subtitle">
-            VI Escola Regional de Alto Desempenho Norte 2 &amp; VI Escola Regional de Aprendizado de Máquina e Inteligência Artificial Norte 2
-          </p>
-
-          <div class="hero-meta-row">
-            <div class="hero-meta-item">
-              <i class="far fa-calendar-alt"></i>
-              <span>26 e 27 de novembro de 2026</span>
-            </div>
-            <div class="hero-meta-item">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>UNIFAP • Macapá - AP</span>
-            </div>
-          </div>
-
-          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="https://centraldesistemas.sbc.org.br/ecos/eradeeramiano22026" target="_blank" rel="noopener" class="wp-block-kubio-button__link btn-sbc-primary">
-              <i class="fas fa-ticket-alt"></i> Inscreva-se no ECOS
-            </a>
-            <a href="#chamadas" class="wp-block-kubio-button__link btn-sbc-outline">
-              <i class="fas fa-file-alt"></i> Trabalhos &amp; Datas
-            </a>
-          </div>
-        </div>
-
-        <div class="hero-logos-box">
-          <img src="assets/images/logo_ERAD-NO.png" alt="Logo ERAD-NO" />
-          <img src="assets/images/logo_ERAMIA-NO.png" alt="Logo ERAMIA-NO" />
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. APRESENTAÇÃO DO EVENTO -->
-    <section id="sobre" class="kubio-section">
-      <div class="h-section-boxed-container">
-        <div class="kubio-section-header">
-          <h2>Apresentação do Evento</h2>
-        </div>
-        <p style="margin-bottom: 14px; font-size: 1.03rem;">
-          A <strong>VI Escola Regional de Alto Desempenho Norte 2 (ERAD-NO2)</strong> e a <strong>VI Escola Regional de Aprendizado de Máquina e Inteligência Artificial Norte 2 (ERAMIA-NO2)</strong> são eventos científicos promovidos pela <strong>Sociedade Brasileira de Computação (SBC)</strong> em parceria com as Comissões Especiais CE-ACPAD, CE-IA e CE-IC.
-        </p>
-        <p style="font-size: 1.03rem;">
-          Realizada de forma <strong>presencial</strong> na <strong>Universidade Federal do Amapá (UNIFAP)</strong>, em Macapá-AP, nos dias <strong>26 e 27 de novembro de 2026</strong>, a sexta edição reúne estudantes de graduação, pós-graduação, docentes e pesquisadores para palestras, minicursos, painéis e sessões técnicas de iniciação científica e pós-graduação.
-        </p>
-      </div>
-    </section>
-
-    <!-- 5. CARDS DE DESTAQUES E CHAMADAS -->
-    <section id="chamadas" class="kubio-section kubio-section-alt">
-      <div class="h-section-boxed-container">
-        <div class="kubio-section-header">
-          <h2>Chamadas, Inscrições e Destaques</h2>
-          <a href="https://jems3.sbc.org.br/eradeeramia-no22026" target="_blank" rel="noopener" class="kubio-read-more">Acessar Sistema JEMS3</a>
-        </div>
-
-        <div class="kubio-cards-grid">
-          <article class="kubio-post-card">
-            <div class="kubio-card-banner">
-              <span>Fórum ERAD-NO2</span>
-              <i class="fas fa-microchip"></i>
-            </div>
-            <div class="kubio-card-body">
-              <h4>Chamada de Trabalhos — Alto Desempenho</h4>
-              <p>Resumos expandidos (até 4 páginas, formato SBC) em Arquitetura de Computadores, GPUs, Nuvem, Computação Paralela e Distribuída.</p>
-              <a href="https://jems3.sbc.org.br/eradeeramia-no22026" target="_blank" rel="noopener" class="kubio-read-more">Ver no JEMS3</a>
-            </div>
-          </article>
-
-          <article class="kubio-post-card">
-            <div class="kubio-card-banner">
-              <span>Fórum ERAMIA-NO2</span>
-              <i class="fas fa-brain"></i>
-            </div>
-            <div class="kubio-card-body">
-              <h4>Chamada de Trabalhos — IA &amp; Aprendizado de Máquina</h4>
-              <p>Submissões nas áreas de Aprendizado de Máquina, Deep Learning, PLN, Visão Computacional, Sistemas Multiagentes e Inteligência Computacional.</p>
-              <a href="https://jems3.sbc.org.br/eradeeramia-no22026" target="_blank" rel="noopener" class="kubio-read-more">Ver no JEMS3</a>
-            </div>
-          </article>
-
-          <article class="kubio-post-card">
-            <div class="kubio-card-banner">
-              <span>Cronograma</span>
-              <i class="far fa-clock"></i>
-            </div>
-            <div class="kubio-card-body">
-              <h4>Datas Importantes 2026</h4>
-              <p>
-                <strong>Notificação de aceitação:</strong> 19/11/2026<br />
-                <strong>Versão final (Camera-ready):</strong> 20/11/2026<br />
-                <strong>Realização do evento:</strong> 26 e 27/11/2026
-              </p>
-              <a href="#programacao" class="kubio-read-more">Ver Programação</a>
-            </div>
-          </article>
-
-          <article class="kubio-post-card">
-            <div class="kubio-card-banner">
-              <span>Combo SBC</span>
-              <i class="fas fa-id-card"></i>
-            </div>
-            <div class="kubio-card-body">
-              <h4>Inscrições via Portal ECOS</h4>
-              <p>Autores e participantes podem aproveitar o Combo SBC (Inscrição + Associação/Renovação) com valores promocionais no sistema oficial.</p>
-              <a href="https://centraldesistemas.sbc.org.br/ecos/eradeeramiano22026" target="_blank" rel="noopener" class="kubio-read-more">Fazer Inscrição</a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- 6. PROGRAMAÇÃO GERAL -->
-    <section id="programacao" class="kubio-section">
-      <div class="h-section-boxed-container">
-        <div class="kubio-section-header">
-          <h2>Programação Geral</h2>
-        </div>
-
-        <div class="programacao-grid">
-          <div class="dia-card">
-            <div class="dia-header"><i class="far fa-calendar-alt"></i> 26/11/2026 — SEXTA-FEIRA</div>
-            <table class="tablepress-sbc">
-              <thead>
-                <tr><th>Horário</th><th>Atividade</th><th>Categoria</th></tr>
-              </thead>
-              <tbody>
-                <tr><td class="horario-cell">08h00 – 08h30</td><td>Credenciamento</td><td><span class="badge-tipo">Cerimônia</span></td></tr>
-                <tr><td class="horario-cell">08h30 – 09h00</td><td>Solenidade de Abertura</td><td><span class="badge-tipo">Cerimônia</span></td></tr>
-                <tr><td class="horario-cell">09h00 – 10h00</td><td><strong>Palestra de Abertura</strong></td><td><span class="badge-tipo">Palestra</span></td></tr>
-                <tr><td class="horario-cell">10h00 – 10h15</td><td>Coffee Break 1</td><td><span class="badge-tipo badge-intervalo">Intervalo</span></td></tr>
-                <tr><td class="horario-cell">10h15 – 12h00</td><td>Sessão Técnica 1 — Artigos</td><td><span class="badge-tipo">Sessão Técnica</span></td></tr>
-                <tr><td class="horario-cell">12h00 – 14h00</td><td>Almoço</td><td><span class="badge-tipo badge-intervalo">Intervalo</span></td></tr>
-                <tr><td class="horario-cell">14h00 – 15h00</td><td>Sessão Técnica 2 — Artigos</td><td><span class="badge-tipo">Sessão Técnica</span></td></tr>
-                <tr><td class="horario-cell">15h00 – 16h00</td><td><strong>Palestra Técnica</strong></td><td><span class="badge-tipo">Palestra</span></td></tr>
-                <tr><td class="horario-cell">16h00 – 16h15</td><td>Coffee Break 2</td><td><span class="badge-tipo badge-intervalo">Intervalo</span></td></tr>
-                <tr><td class="horario-cell">16h15 – 18h00</td><td>Sessão Técnica 3 — Artigos</td><td><span class="badge-tipo">Sessão Técnica</span></td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="dia-card">
-            <div class="dia-header"><i class="far fa-calendar-alt"></i> 27/11/2026 — SÁBADO</div>
-            <table class="tablepress-sbc">
-              <thead>
-                <tr><th>Horário</th><th>Atividade</th><th>Categoria</th></tr>
-              </thead>
-              <tbody>
-                <tr><td class="horario-cell">08h00 – 08h30</td><td>Credenciamento</td><td><span class="badge-tipo">Cerimônia</span></td></tr>
-                <tr><td class="horario-cell">08h30 – 10h00</td><td>Oficina / Minicurso</td><td><span class="badge-tipo">Oficina</span></td></tr>
-                <tr><td class="horario-cell">10h00 – 10h15</td><td>Coffee Break 3</td><td><span class="badge-tipo badge-intervalo">Intervalo</span></td></tr>
-                <tr><td class="horario-cell">10h15 – 12h00</td><td>Sessão Técnica 4 — Artigos</td><td><span class="badge-tipo">Sessão Técnica</span></td></tr>
-                <tr><td class="horario-cell">12h00 – 13h30</td><td>Almoço</td><td><span class="badge-tipo badge-intervalo">Intervalo</span></td></tr>
-                <tr><td class="horario-cell">13h30 – 15h00</td><td><strong>Palestra</strong></td><td><span class="badge-tipo">Palestra</span></td></tr>
-                <tr><td class="horario-cell">15h00 – 16h00</td><td>Sessão Técnica 5 — Artigos</td><td><span class="badge-tipo">Sessão Técnica</span></td></tr>
-                <tr><td class="horario-cell">16h00 – 17h45</td><td>Painel Temático Norte 2</td><td><span class="badge-tipo">Painel</span></td></tr>
-                <tr><td class="horario-cell">17h45 – 18h00</td><td>Cerimônia de Encerramento e Premiação</td><td><span class="badge-tipo">Cerimônia</span></td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 7. LOCAL DO EVENTO (MAPA UNIFAP) -->
-    <section id="local" class="kubio-section kubio-section-alt">
-      <div class="h-section-boxed-container">
-        <div class="kubio-section-header">
-          <h2>Local do Evento — UNIFAP (Macapá - AP)</h2>
-        </div>
-        <p>O evento será realizado presencialmente na <strong>Universidade Federal do Amapá (UNIFAP Digital)</strong>, Rod. Juscelino Kubitschek, Km 02 — Jardim Marco Zero, Macapá - AP.</p>
-        <div class="mapa-responsivo">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.818270192112!2d-51.08815382415937!3d-0.009084499990822519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x929e1f00531be1c9%3A0x46f0536468d539aa!2sUnifap%20Digital!5e0!3m2!1spt-BR!2sbr!4v1790011694792!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-        </div>
-      </div>
-    </section>
-
-<!-- FAIXA DESTAQUE SOL -->
-<section class="sbc-sol-banner">
-  <div class="sbc-sol-inner">
-    <div>
-      <h2>Publicação na SBC OpenLib (SOL)</h2>
-      <p>Os anais oficiais da VI ERAD | ERAMIA-NO2 2026 serão indexados e publicados em acesso aberto na SOL — a biblioteca digital mantida pela Sociedade Brasileira de Computação.</p>
     </div>
-    <a href="https://sol.sbc.org.br/" target="_blank" rel="noopener" class="wp-block-kubio-button__link btn-sbc-primary">
-      <i class="fas fa-book-open"></i> Conheça a SOL
-    </a>
-  </div>
-</section>
+  </header>
 
-<!-- REALIZAÇÃO E ORGANIZAÇÃO -->
-<section class="instituicoes-bar" aria-label="Realização e Organização">
-  <div class="instituicoes-grid">
-    <div class="inst-group">
-      <span class="inst-label">Realização</span>
-      <div class="inst-logos-row">
-        <a href="https://www.sbc.org.br/" target="_blank" rel="noopener" class="inst-logo-card" title="Sociedade Brasileira de Computação (SBC)">
-          <img src="assets/images/logo_SBC.jpg" alt="SBC — Sociedade Brasileira de Computação" />
-        </a>
+  <!-- HERO (VISÍVEL NO INÍCIO) -->
+  <section class="hero" id="hero-banner">
+    <div class="hero-grid">
+      <div>
+        <span class="hero-kicker">Resultado Divulgado • Lista de Aprovados Disponível</span>
+        <h1>VI ERAD | <span>ERAMIA-NO2</span> 2026</h1>
+        <p>VI Escola Regional de Alto Desempenho Norte 2 &amp; VI Escola Regional de Aprendizado de Máquina e Inteligência Artificial Norte 2</p>
+        <div class="hero-meta">
+          <span><i class="far fa-calendar-alt"></i> 26 e 27 de novembro de 2026</span>
+          <span><i class="fas fa-map-marker-alt"></i> UNIFAP • Macapá - AP</span>
+        </div>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="showPage('aprovados')"><i class="fas fa-check-circle"></i> Ver Artigos Aprovados</button>
+          <button class="btn-outline" onclick="showPage('comissao')"><i class="fas fa-users"></i> Comissão Organizadora</button>
+        </div>
+      </div>
+      <div class="hero-logos">
+        <img src="assets/images/logo_ERAD-NO.png" alt="Logo ERAD-NO2" />
+        <img src="assets/images/logo_ERAMIA-NO.png" alt="Logo ERAMIA-NO2" />
       </div>
     </div>
+  </section>
 
-    <div class="inst-group">
-      <span class="inst-label">Organização</span>
-      <div class="inst-logos-row">
-        <a href="https://www.ifap.edu.br/" target="_blank" rel="noopener" class="inst-logo-card" title="Instituto Federal do Amapá (IFAP)">
-          <img src="assets/images/logo_IFAP.png" alt="IFAP — Instituto Federal do Amapá" />
-        </a>
-        <a href="https://www.unifap.br/" target="_blank" rel="noopener" class="inst-logo-card" title="Universidade Federal do Amapá (UNIFAP)">
-          <img src="assets/images/logo_UNIFAP.jpg" alt="UNIFAP — Universidade Federal do Amapá" class="logo-unifap-wide" />
-        </a>
+  <!-- ================= PÁGINA 1: INÍCIO ================= -->
+  <main id="page-inicio" class="page-view active">
+    <div class="container">
+      <div class="section-header">
+        <h2>Sobre o Evento</h2>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- RODAPÉ INSTITUCIONAL SBC -->
-<footer class="wp-block-kubio-footer">
-  <div class="footer-grid">
-    <div>
-      <h4>VI ERAD | ERAMIA-NO2 2026</h4>
-      <p>Escolas Regionais de Alto Desempenho e de Aprendizado de Máquina e Inteligência Artificial da Região Norte 2.</p>
-    </div>
-    <div>
-      <h4>Links Rápidos SBC</h4>
-      <p>
-        <a href="https://www.sbc.org.br/" style="color:#00fb00;text-decoration:none;">Portal Oficial da SBC</a><br />
-        <a href="https://centraldesistemas.sbc.org.br/ecos/eradeeramiano22026" style="color:#00fb00;text-decoration:none;">Sistema ECOS (Inscrições)</a><br />
-        <a href="https://jems3.sbc.org.br/eradeeramia-no22026" style="color:#00fb00;text-decoration:none;">Sistema JEMS3 (Submissões)</a>
+      <p style="margin-bottom: 14px; font-size: 1.03rem;">
+        A <strong>VI Escola Regional de Alto Desempenho Norte 2 (ERAD-NO2)</strong> e a <strong>VI Escola Regional de Aprendizado de Máquina e Inteligência Artificial Norte 2 (ERAMIA-NO2)</strong> são eventos científicos promovidos pela <strong>Sociedade Brasileira de Computação (SBC)</strong> em parceria com as Comissões Especiais CE-ACPAD, CE-IA e CE-IC.
       </p>
-    </div>
-    <div>
-      <h4>Comissão Organizadora</h4>
-      <p>IFAP &amp; UNIFAP • Macapá - Amapá<br />26 e 27 de novembro de 2026</p>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2026 Sociedade Brasileira de Computação (SBC). Todos os direitos reservados.</span>
-    <span>Identidade visual adaptada ao padrão Kubio SBC</span>
-  </div>
-</footer>
+      <p style="margin-bottom: 32px; font-size: 1.03rem;">
+        Realizada presencialmente na <strong>Universidade Federal do Amapá (UNIFAP)</strong>, em Macapá-AP, nos dias <strong>26 e 27 de novembro de 2026</strong>, a sexta edição reúne estudantes, docentes e pesquisadores para palestras, oficinas, painéis e sessões técnicas.
+      </p>
 
-  </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-top"><span>Artigos Aprovados</span><i class="fas fa-file-alt"></i></div>
+          <div class="card-body">
+            <h3>Lista Oficial de Trabalhos Aceitos</h3>
+            <p>Confira os 25 artigos selecionados para apresentação nas sessões técnicas da VI ERAD | ERAMIA-NO2 2026.</p>
+            <button class="btn-card" onclick="showPage('aprovados')">Acessar Lista</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-top"><span>Organização</span><i class="fas fa-user-tie"></i></div>
+          <div class="card-body">
+            <h3>Comissão Organizadora 2026</h3>
+            <p>Conheça os docentes coordenadores do IFAP, UNIFAP e UFPA e acesse seus currículos Lattes e portais SIGAA.</p>
+            <button class="btn-card" onclick="showPage('comissao')">Ver Comissão</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-top"><span>Datas Importantes</span><i class="far fa-clock"></i></div>
+          <div class="card-body">
+            <h3>Cronograma Oficial</h3>
+            <p>
+              <strong>Notificação de aceitação:</strong> 19/11/2026<br/>
+              <strong>Versão final (Camera-ready):</strong> 20/11/2026<br/>
+              <strong>Evento presencial:</strong> 26 e 27/11/2026
+            </p>
+            <button class="btn-card" onclick="showPage('programacao')">Ver Programação</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-top"><span>Redes &amp; Histórico</span><i class="fab fa-instagram"></i></div>
+          <div class="card-body">
+            <h3>Instagram &amp; Edições Anteriores</h3>
+            <p>Siga o novo perfil oficial <strong>@erad.eramia.no2</strong> no Instagram e acesse os sites das edições de 2021 a 2025.</p>
+            <button class="btn-card" onclick="showPage('links')">Acessar Links</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================= PÁGINA 2: COMISSÃO ORGANIZADORA ================= -->
+  <section id="page-comissao" class="page-view">
+    <div class="container">
+      <div class="section-header">
+        <h2>Comissão Organizadora — VI ERAD | ERAMIA-NO2 2026</h2>
+      </div>
+
+      <div class="cards-grid">
+        <div class="comissao-card">
+          <div>
+            <h3>Thiêgo Maciel Nunes</h3>
+            <span class="comissao-inst"><i class="fas fa-university"></i> Instituto Federal do Amapá (IFAP)</span>
+          </div>
+          <a href="http://lattes.cnpq.br/1916257244628661" target="_blank" rel="noopener" class="btn-card">
+            <i class="fas fa-external-link-alt"></i> Currículo Lattes
+          </a>
+        </div>
+
+        <div class="comissao-card">
+          <div>
+            <h3>Rafael Pontes Lima</h3>
+            <span class="comissao-inst"><i class="fas fa-university"></i> Universidade Federal do Amapá (UNIFAP)</span>
+          </div>
+          <a href="https://sigaa.unifap.br/sigaa/public/docente/portal.jsf?siape=1538761" target="_blank" rel="noopener" class="btn-card">
+            <i class="fas fa-external-link-alt"></i> Portal Docente SIGAA
+          </a>
+        </div>
+
+        <div class="comissao-card">
+          <div>
+            <h3>Iago Lins Medeiros</h3>
+            <span class="comissao-inst"><i class="fas fa-university"></i> Universidade Federal do Pará (UFPA)</span>
+          </div>
+          <a href="http://lattes.cnpq.br/7024608706674939" target="_blank" rel="noopener" class="btn-card">
+            <i class="fas fa-external-link-alt"></i> Currículo Lattes
+          </a>
+        </div>
+
+        <div class="comissao-card">
+          <div>
+            <h3>Klessis Lopes Dias</h3>
+            <span class="comissao-inst"><i class="fas fa-university"></i> Instituto Federal do Amapá (IFAP)</span>
+          </div>
+          <a href="http://lattes.cnpq.br/9558483576973124" target="_blank" rel="noopener" class="btn-card">
+            <i class="fas fa-external-link-alt"></i> Currículo Lattes
+          </a>
+        </div>
+
+        <div class="comissao-card">
+          <div>
+            <h3>Marcoz Tulio Amaris Gonzalez</h3>
+            <span class="comissao-inst"><i class="fas fa-university"></i> Universidade Federal do Pará (UFPA)</span>
+          </div>
+          <a href="http://sigaa.ufpa.br/sigaa/public/docente/portal.jsf?siape=3088325" target="_blank" rel="noopener" class="btn-card">
+            <i class="fas fa-external-link-alt"></i> Portal Docente SIGAA
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PÁGINA 3: ARTIGOS APROVADOS ================= -->
+  <section id="page-aprovados" class="page-view">
+    <div class="container">
+      <div class="section-header">
+        <h2>Artigos Aprovados — VI ERAD | ERAMIA Norte 2</h2>
+      </div>
+
+      <div class="search-bar-box">
+        <input type="text" id="busca-artigos" placeholder="Filtrar por título do artigo, autor ou instituição (ex: UNIFAP, UFPA, IFAP, RAG)..." onkeyup="filtrarArtigos()" />
+        <span class="count-badge" id="contador-artigos">25 artigos exibidos</span>
+      </div>
+
+      <div id="lista-artigos-container"></div>
+    </div>
+  </section>
+
+  <!-- ================= PÁGINA 4: PROGRAMAÇÃO ================= -->
+  <section id="page-programacao" class="page-view">
+    <div class="container">
+      <div class="section-header">
+        <h2>Programação Geral — 26 e 27 de Novembro de 2026</h2>
+      </div>
+
+      <h3 style="color: var(--cor-escura); margin-bottom: 10px;">26/11/2026 — Sexta-feira</h3>
+      <table class="table-sbc">
+        <thead><tr><th>Horário</th><th>Atividade</th><th>Tipo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>08h00 – 08h30</strong></td><td>Credenciamento</td><td>Cerimônia</td></tr>
+          <tr><td><strong>08h30 – 09h00</strong></td><td>Solenidade de abertura</td><td>Cerimônia</td></tr>
+          <tr><td><strong>09h00 – 10h00</strong></td><td>Palestra</td><td>Palestra / Painel</td></tr>
+          <tr><td><strong>10h00 – 10h15</strong></td><td>Intervalo — Coffee Break 1</td><td>Intervalo</td></tr>
+          <tr><td><strong>10h15 – 12h00</strong></td><td>Sessão técnica 1 — Artigos</td><td>Sessão técnica</td></tr>
+          <tr><td><strong>12h00 – 14h00</strong></td><td>Almoço</td><td>Intervalo</td></tr>
+          <tr><td><strong>14h00 – 15h00</strong></td><td>Sessão técnica 2 — Artigos</td><td>Sessão técnica</td></tr>
+          <tr><td><strong>15h00 – 16h00</strong></td><td>Palestra</td><td>Palestra / Painel</td></tr>
+          <tr><td><strong>16h00 – 16h15</strong></td><td>Intervalo — Coffee Break 2</td><td>Intervalo</td></tr>
+          <tr><td><strong>16h15 – 18h00</strong></td><td>Sessão técnica 3 — Artigos</td><td>Sessão técnica</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="color: var(--cor-escura); margin-bottom: 10px;">27/11/2026 — Sábado</h3>
+      <table class="table-sbc">
+        <thead><tr><th>Horário</th><th>Atividade</th><th>Tipo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>08h00 – 08h30</strong></td><td>Credenciamento</td><td>Cerimônia</td></tr>
+          <tr><td><strong>08h30 – 10h00</strong></td><td>Palestra / Oficina</td><td>Oficina</td></tr>
+          <tr><td><strong>10h00 – 10h15</strong></td><td>Intervalo — Coffee Break 3</td><td>Intervalo</td></tr>
+          <tr><td><strong>10h15 – 12h00</strong></td><td>Sessão técnica 4 — Artigos</td><td>Sessão técnica</td></tr>
+          <tr><td><strong>12h00 – 13h30</strong></td><td>Almoço</td><td>Intervalo</td></tr>
+          <tr><td><strong>13h30 – 15h00</strong></td><td>Palestra</td><td>Palestra / Painel</td></tr>
+          <tr><td><strong>15h00 – 16h00</strong></td><td>Sessão técnica 5 — Artigos</td><td>Sessão técnica</td></tr>
+          <tr><td><strong>16h00 – 17h45</strong></td><td>Painel</td><td>Painel</td></tr>
+          <tr><td><strong>17h45 – 18h00</strong></td><td>Encerramento</td><td>Cerimônia</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= PÁGINA 5: INSCRIÇÕES ================= -->
+  <section id="page-inscricoes" class="page-view">
+    <div class="container">
+      <div class="section-header">
+        <h2>Inscrições — Portal ECOS SBC</h2>
+        <a href="https://centraldesistemas.sbc.org.br/ecos/eradeeramiano22026" target="_blank" rel="noopener" class="btn-primary">Inscrever-se no ECOS</a>
+      </div>
+
+      <p style="margin-bottom: 18px;">
+        Pelo menos um dos autores de cada artigo aceito deve realizar inscrição no evento para publicação nos anais na <strong>SBC OpenLib (SOL)</strong>.
+      </p>
+
+      <table class="table-sbc">
+        <thead>
+          <tr><th>Categoria</th><th>1º Período (01/10 a 15/11)</th><th>2º Período (até 27/11)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Estudantes — Associado SBC vigente</td><td>R$ 35,00</td><td>R$ 45,00</td></tr>
+          <tr><td>Estudantes — COMBO (Inscrição + Associação SBC)</td><td>R$ 70,00</td><td>R$ 80,00</td></tr>
+          <tr><td>Estudantes — Não associado (somente evento)</td><td>R$ 74,00</td><td>R$ 85,00</td></tr>
+          <tr><td>Estudantes de Pós-Graduação — Associado SBC vigente</td><td>R$ 45,00</td><td>R$ 55,00</td></tr>
+          <tr><td>Estudantes de Pós-Graduação — COMBO SBC</td><td>R$ 187,00</td><td>R$ 197,00</td></tr>
+          <tr><td>Estudantes de Pós-Graduação — Não associado</td><td>R$ 192,00</td><td>R$ 203,00</td></tr>
+          <tr><td>Profissionais / Professores Federais — Associado SBC vigente</td><td>R$ 55,00</td><td>R$ 65,00</td></tr>
+          <tr><td>Profissionais / Efetivos — COMBO SBC</td><td>R$ 449,00</td><td>R$ 459,00</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= PÁGINA 6: LINKS & EDIÇÕES ANTERIORES ================= -->
+  <section id="page-links" class="page-view">
+    <div class="container">
+      <div class="section-header">
+        <h2>Links Oficiais, Instagram e Edições Anteriores</h2>
+      </div>
+
+      <div class="cards-grid" style="margin-bottom: 36px;">
+        <div class="card">
+          <div class="card-top"><span>Novo Instagram Oficial</span><i class="fab fa-instagram"></i></div>
+          <div class="card-body">
+            <h3>@erad.eramia.no2</h3>
+            <p>Acompanhe novidades, divulgação dos trabalhos, palestrantes e bastidores da VI ERAD | ERAMIA-NO2 2026.</p>
+            <a href="https://www.instagram.com/erad.eramia.no2/" target="_blank" rel="noopener" class="btn-card">Seguir no Instagram</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-top"><span>Sistemas SBC</span><i class="fas fa-laptop-code"></i></div>
+          <div class="card-body">
+            <h3>ECOS, JEMS3 e SOL</h3>
+            <p>Acesse diretamente os portais oficiais da Sociedade Brasileira de Computação para submissão, inscrição e anais.</p>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <a href="https://centraldesistemas.sbc.org.br/ecos/eradeeramiano22026" target="_blank" rel="noopener" class="btn-card">ECOS</a>
+              <a href="https://jems3.sbc.org.br/eradeeramia-no22026" target="_blank" rel="noopener" class="btn-card">JEMS3</a>
+              <a href="https://sol.sbc.org.br/" target="_blank" rel="noopener" class="btn-card">SOL SBC</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <h2>Histórico de Edições Anteriores (2021 – 2025)</h2>
+      </div>
+      <div class="cards-grid">
+        <a href="https://www2.sbc.org.br/erad_eramia-no2/2025/" target="_blank" rel="noopener" class="comissao-card" style="text-decoration:none;">
+          <h3>V ERAD | ERAMIA-NO2 (2025)</h3>
+          <span class="comissao-inst">https://www2.sbc.org.br/erad_eramia-no2/2025/</span>
+        </a>
+        <a href="https://www2.sbc.org.br/erad_eramia-no2/2024/" target="_blank" rel="noopener" class="comissao-card" style="text-decoration:none;">
+          <h3>IV ERAD | ERAMIA-NO2 (2024)</h3>
+          <span class="comissao-inst">https://www2.sbc.org.br/erad_eramia-no2/2024/</span>
+        </a>
+        <a href="https://www2.sbc.org.br/erad_eramia-no2/2023/" target="_blank" rel="noopener" class="comissao-card" style="text-decoration:none;">
+          <h3>III ERAD | ERAMIA-NO2 (2023)</h3>
+          <span class="comissao-inst">https://www2.sbc.org.br/erad_eramia-no2/2023/</span>
+        </a>
+        <a href="https://www2.sbc.org.br/erad_eramia-no2/2022/" target="_blank" rel="noopener" class="comissao-card" style="text-decoration:none;">
+          <h3>II ERAD | ERAMIA-NO2 (2022)</h3>
+          <span class="comissao-inst">https://www2.sbc.org.br/erad_eramia-no2/2022/</span>
+        </a>
+        <a href="https://www2.sbc.org.br/erad_eramia-no2/2021/" target="_blank" rel="noopener" class="comissao-card" style="text-decoration:none;">
+          <h3>I ERAD | ERAMIA-NO2 (2021)</h3>
+          <span class="comissao-inst">https://www2.sbc.org.br/erad_eramia-no2/2021/</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h4>VI ERAD | ERAMIA-NO2 2026</h4>
+        <p>Escolas Regionais de Alto Desempenho e de Aprendizado de Máquina e Inteligência Artificial da Região Norte 2.</p>
+      </div>
+      <div>
+        <h4>Redes &amp; Sistemas</h4>
+        <a href="https://www.instagram.com/erad.eramia.no2/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i> Instagram (@erad.eramia.no2)</a><br/>
+        <a href="https://centraldesistemas.sbc.org.br/ecos/eradeeramiano22026" target="_blank" rel="noopener">Inscrições ECOS SBC</a><br/>
+        <a href="https://jems3.sbc.org.br/eradeeramia-no22026" target="_blank" rel="noopener">Submissões JEMS3</a>
+      </div>
+      <div>
+        <h4>Edições Anteriores</h4>
+        <a href="https://www2.sbc.org.br/erad_eramia-no2/2025/" target="_blank" rel="noopener">Edição 2025</a> •
+        <a href="https://www2.sbc.org.br/erad_eramia-no2/2024/" target="_blank" rel="noopener">Edição 2024</a> •
+        <a href="https://www2.sbc.org.br/erad_eramia-no2/2023/" target="_blank" rel="noopener">Edição 2023</a><br/>
+        <a href="https://www2.sbc.org.br/erad_eramia-no2/2022/" target="_blank" rel="noopener">Edição 2022</a> •
+        <a href="https://www2.sbc.org.br/erad_eramia-no2/2021/" target="_blank" rel="noopener">Edição 2021</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Sociedade Brasileira de Computação (SBC). Todos os direitos reservados.</span>
+      <span>Realização: SBC • Organização: IFAP &amp; UNIFAP</span>
+    </div>
+  </footer>
+
+  <script>
+    const artigosAprovados = [
+      { titulo: "Medição do Custo Computacional e da Escalabilidade de Algoritmos de Aprendizado de Máquina na Previsão da Produtividade da Soja", autores: "Maycon Lima dos Santos (UFPA), Caio Moreira (UFPA)" },
+      { titulo: "Avaliação da Tradução de Perguntas em Português para SQL sobre Dados Orçamentários do TJAP: Efeito da Descrição do Esquema e da Autocorreção", autores: "Higor Silva (UNIFAP), Rafael Pontes Lima (UNIFAP), Julio Cezar Costa Furtado (UNIFAP)" },
+      { titulo: "Um Pipeline Reprodutível para Avaliação de Desempenho do Plano de Controle SDN: OpenFlow 1.0 versus 1.3 no Controlador Ryu", autores: "Marco Leal (UNIFAP), Alender Melo, João Rocha" },
+      { titulo: "Aplicação de Aprendizado de Máquina na Previsão da Produtividade da Soja: Um Estudo de Caso na Fronteira Amazônica", autores: "Maycon Lima dos Santos (UFPA), Caio Moreira (UFPA)" },
+      { titulo: "Sentinela de IA: Desenvolvimento e Avaliação de uma Ferramenta Inteligente para Governança de Shadow AI em Instituições de Ensino", autores: "Hernane Bini (UNIFAP), Adeildo Telles (UNIFAP)" },
+      { titulo: "plenarIA: Resumos em Linguagem Cidadã de Sessões Plenárias do TRE-AP com Reconhecimento de Fala e LLM", autores: "Josemar Ferreira Gama (UNIFAP), Julio Cezar Costa Furtado (UNIFAP)" },
+      { titulo: "Cérebro de Chamados: Recuperação Híbrida e Geração de Resoluções a partir do Histórico de Suporte do TRE-AP", autores: "João Santana (UNIFAP), Gabriel Enrique Almeida Gonçalves (UNIFAP), Lara Lethicia de Oliveira Araújo (UNIFAP), Pedro Lucas Gomes Brito (UNIFAP), Renan Coutinho Diniz, Rafael Pontes Lima (UNIFAP), Emanoel dos Santos Flexa (UFRRJ), Julio Cezar Costa Furtado (UNIFAP)" },
+      { titulo: "Plataforma de Monitoramento Eleitoral: Coleta e Checagem em Cascata de Notícias com Modelos de Linguagem", autores: "Gabriel Enrique Almeida Gonçalves (UNIFAP), Lara Lethicia de Oliveira Araújo (UNIFAP), Pedro Lucas Gomes Brito (UNIFAP), Renan Coutinho Diniz, Rafael Pontes Lima (UNIFAP), Emanoel dos Santos Flexa (UFRRJ), Julio Cezar Costa Furtado (UNIFAP)" },
+      { titulo: "Assistentes de Normas do TRE-AP: Raspagem, Normas Revogadas e Recuperação Híbrida em Camadas", autores: "Gabriel Enrique Almeida Gonçalves (UNIFAP), Lara Lethicia de Oliveira Araújo (UNIFAP), Pedro Lucas Gomes Brito (UNIFAP), Douglas da Silva Sousa, Renan Coutinho Diniz, Rafael Pontes Lima (UNIFAP), Emanoel dos Santos Flexa (UFRRJ), Julio Cezar Costa Furtado (UNIFAP)" },
+      { titulo: "Correção Assistida por Rubrica com Modelos de Linguagem: Execuções Repetidas e Abstenção em Critérios Divergentes", autores: "Glauco Silva Sousa (UNIFAP), Julio Cezar Costa Furtado (UNIFAP)" },
+      { titulo: "Busca em Linguagem Natural nas Portarias da UNIFAP com Geração Aumentada por Recuperação e Consultas ao Catálogo de Metadados", autores: "Samir Patrice Batista da Silva (UNIFAP), Julio Cezar Costa Furtado (UNIFAP)" },
+      { titulo: "Sistema Inteligente de Denúncias Anônimas (SIDA): Atendimento Conversacional com Modelos de Linguagem na Polícia Militar do Amapá", autores: "José Marcel de Oliveira Santos, Julio Cezar Costa Furtado (UNIFAP)" },
+      { titulo: "MGBE-IA: Implementação e Avaliação Funcional de um Protótipo Rastreável para Apoio à Análise de Relatos de Bullying Escolar", autores: "Josiel Benicio Bezerra (SBC), Jorge Ivan Queiroz (UNIFAP), Adriano dos Santos Barbosa (UNIFAP), Adeildo Telles (UNIFAP)" },
+      { titulo: "IA para Eficiência na Gestão Pública: Desenvolvimento e Avaliação de um Sistema de Busca Semântica para Documentos Oficiais", autores: "Thiago Castro (UFPA), Mateus Abreu Rodrigues, Caio Moreira (UFPA)" },
+      { titulo: "Ciência de Dados e Inteligência Artificial: Complementaridade e Possibilidades na Compreensão, Classificação e Predição de Dados", autores: "Mariana Andrade (IFAP), Neylan Dias (UNIFAP), Ana Karoline da Trindade" },
+      { titulo: "Advog.IA: Co-piloto Jurídico Baseado em RAG e Personas Especializadas para Mitigação de Alucinações", autores: "Martony Demes Silva (UFPI), Antonio Daniel de Souza Linhares (USP), Idarlan Rogerio Dias Magalhaes, Gedionir Amaral Paim, Raylson Lima (IFCE)" },
+      { titulo: "Arquitetura RAG com IA Generativa para Apoio Psicopedagógico a Estudantes com Dislexia: Desenvolvimento e Validação Técnica Preliminar", autores: "Francineia Ramos (UNIFAP), Adeildo Telles (UNIFAP)" },
+      { titulo: "Segmentação U-Net e Classificação de Lesões de Pele: Comparação de Arquiteturas", autores: "Beatriz Silva de Melo (UFPA), Iago Medeiros (UFPA)" },
+      { titulo: "Motor de Regras Contextuais e IoT para Associação Automática de Frequência Escolar a Turmas e Disciplinas", autores: "Joelden Lopes (UNIFAP), Adeildo Telles (UNIFAP)" },
+      { titulo: "Recuperação Inteligente de Informações em Documentos Acadêmicos Institucionais com RAG Local e Vetorização Semântica", autores: "Marco Leal (UNIFAP), Josemar Gama (UNIFAP)" },
+      { titulo: "NetHolmes: Agente Baseado em LLM Local com Uso de Ferramentas para Diagnóstico de Redes IPv4/IPv6", autores: "Marco Leal (UNIFAP), Rafael Pontes Lima (UNIFAP), Samir Patrice Batista da Silva (UNIFAP), Lucas Matheus Souza (UNIFAP)" },
+      { titulo: "Simplificação de Termos Jurídicos no Fluxo de Leitura com Base Lexical Estruturada e Modelos de Linguagem", autores: "Marco Leal (UNIFAP), Renato Costa, Raphael França" },
+      { titulo: "Data Workers: Os Trabalhadores Invisíveis por trás dos LLMs", autores: "Ema Miranda Pantoja (UNIFAP), Adolfo Gustavo Serra Seca Neto (UTFPR)" },
+      { titulo: "Regularização Espectral em Sistemas Críticos: Avaliação Empírica do Wrapper WW-PGD sob Perturbações OOD", autores: "Martony Demes Silva (UFPI)" },
+      { titulo: "Íris: Aplicação do Processamento de Linguagem Natural na Construção de um Assistente Virtual de Voz para Atendimento em Mercados Inteligentes", autores: "Elender Keuly Souza (IFAP), Leticia Carla Souza Rodrigues, Elisa Cristiny Rocha Rodrigues, Arthur Souza da Cunha" }
+    ];
+
+    function renderArtigos(lista) {
+      const container = document.getElementById('lista-artigos-container');
+      const contador = document.getElementById('contador-artigos');
+      contador.textContent = `${lista.length} artigo${lista.length === 1 ? '' : 's'} exibido${lista.length === 1 ? '' : 's'}`;
+      container.innerHTML = lista.map((item, idx) => `
+        <div class="paper-item">
+          <div class="paper-title">${idx + 1}. ${item.titulo}</div>
+          <div class="paper-authors"><i class="fas fa-users" style="color:var(--cor-primaria);margin-right:6px;"></i>${item.autores}</div>
+        </div>
+      `).join('');
+    }
+
+    function filtrarArtigos() {
+      const termo = document.getElementById('busca-artigos').value.toLowerCase();
+      const filtrados = artigosAprovados.filter(a =>
+        a.titulo.toLowerCase().includes(termo) || a.autores.toLowerCase().includes(termo)
+      );
+      renderArtigos(filtrados);
+    }
+
+    function showPage(pageId) {
+      document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('page-' + pageId).classList.add('active');
+      const btn = document.querySelector(`.tab-btn[data-target="${pageId}"]`);
+      if (btn) btn.classList.add('active');
+      document.getElementById('hero-banner').style.display = (pageId === 'inicio') ? 'block' : 'none';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    renderArtigos(artigosAprovados);
+  </script>
 </body>
 </html>
