@@ -1,0 +1,721 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800&family=Syne:wght@400;600;700&display=swap');
+
+:root {
+  /* Sobrescrita exata das variáveis CSS do tema Kubio da SBC (sbc.org.br) */
+  --kubio-color-1: 0, 125, 0;              /* #007D00 - Verde Primário (Logos ERAD/ERAMIA) */
+  --kubio-color-1-variant-4: 0, 55, 0;     /* #003700 - Hover / Verde Profundo */
+  --kubio-color-2: 0, 251, 0;              /* #00FB00 - Verde Neon Circuito */
+  --kubio-color-2-variant-4: 0, 200, 0;    /* #00C800 - Destaque Secundário */
+  --kubio-color-3: 0, 120, 0;              /* #007800 - Verde Institucional */
+  --kubio-color-4: 40, 53, 45;             /* Cinza-esverdeado escuro para textos */
+  --kubio-color-4-variant-5: 0, 6, 0;      /* #000600 - Preto técnico */
+  --kubio-color-5: 255, 255, 255;          /* #FFFFFF - Fundo claro */
+  --kubio-color-5-variant-2: 242, 249, 243;/* Superfície suave esverdeada */
+  --kubio-color-6: 18, 28, 20;             /* Títulos escuros */
+
+  /* Tokens WPDM / Botões SBC */
+  --color-primary: #007d00;
+  --color-primary-rgb: 0, 125, 0;
+  --color-primary-hover: #003700;
+  --color-success: #00fb00;
+  --font-sbc: 'Mulish', Helvetica, Arial, sans-serif;
+  --font-accent: 'Syne', Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body.wp-theme-kubio {
+  font-family: var(--font-sbc);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgb(var(--kubio-color-4));
+  background-color: rgb(var(--kubio-color-5));
+}
+
+/* =========================================================
+   1. TOPBAR INSTITUCIONAL SBC (Estrutura kubio-header)
+   ========================================================= */
+.sbc-topbar {
+  background-color: #003700;
+  color: #ffffff;
+  border-bottom: 2px solid #00fb00;
+  padding: 8px 0;
+  font-size: 13px;
+}
+
+.h-section-boxed-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.sbc-topbar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sbc-topbar-tag {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.sbc-topbar-tag span.badge-neon {
+  background-color: #00fb00;
+  color: #000600;
+  font-weight: 800;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.sbc-social-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sbc-social-icons a {
+  width: 28px;
+  height: 28px;
+  border-radius: 100%;
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.sbc-social-icons a:hover {
+  background-color: #00fb00;
+  color: #000600;
+}
+
+/* =========================================================
+   2. NAVEGAÇÃO PRINCIPAL (Estrutura kubio-navigation-section)
+   ========================================================= */
+.wp-block-kubio-navigation-section {
+  background-color: #ffffff;
+  border-bottom: 1px solid #dedede;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.kubio-nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 16px;
+}
+
+.kubio-logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.kubio-logo-wrap img {
+  height: 52px;
+  width: auto;
+  object-fit: contain;
+}
+
+.kubio-logo-title {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.kubio-logo-title strong {
+  color: #003700;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+
+.kubio-logo-title small {
+  color: #007d00;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.kubio-menu > ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.kubio-menu > ul > li > a {
+  display: inline-block;
+  font-family: var(--font-sbc);
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #121c14;
+  padding: 11px 14px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.kubio-menu > ul > li.current_page_item > a,
+.kubio-menu > ul > li > a:hover {
+  background-color: rgb(var(--kubio-color-1));
+  color: #ffffff;
+}
+
+.kubio-menu > ul > li.btn-nav-ecos > a {
+  background-color: #00fb00;
+  color: #000600;
+  font-weight: 800;
+}
+
+.kubio-menu > ul > li.btn-nav-ecos > a:hover {
+  background-color: #003700;
+  color: #00fb00;
+}
+
+/* =========================================================
+   3. SUPER BANNER / HERO (Estilo SmartSlider3 da SBC)
+   ========================================================= */
+.sbc-smartslider-hero {
+  background: radial-gradient(circle at 80% 25%, #007d00 0%, #003700 45%, #000600 100%);
+  color: #ffffff;
+  padding: 56px 20px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 4px solid #00fb00;
+}
+
+.sbc-smartslider-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(0, 251, 0, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 251, 0, 0.06) 1px, transparent 1px);
+  background-size: 36px 36px;
+  pointer-events: none;
+}
+
+.hero-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.45fr 0.85fr;
+  align-items: center;
+  gap: 32px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-kicker {
+  display: inline-block;
+  background: rgba(0, 251, 0, 0.14);
+  border: 1px solid #00fb00;
+  color: #00fb00;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 5px 14px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+}
+
+.sbc-smartslider-hero h1 {
+  font-size: 2.75rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.sbc-smartslider-hero h1 span {
+  color: #00fb00;
+}
+
+.hero-subtitle {
+  font-size: 1.08rem;
+  color: #e6f7e8;
+  font-weight: 400;
+  margin-bottom: 22px;
+  max-width: 650px;
+}
+
+.hero-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 26px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.hero-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 6, 0, 0.45);
+  border: 1px solid rgba(0, 251, 0, 0.35);
+  padding: 8px 14px;
+  border-radius: 5px;
+}
+
+.hero-meta-item i {
+  color: #00fb00;
+}
+
+/* Botão Padrão SBC (kubio-button) */
+.wp-block-kubio-button__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sbc);
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 14px 26px;
+  border-radius: 5px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.btn-sbc-primary {
+  background-color: #00fb00;
+  color: #000600;
+  border: 2px solid #00fb00;
+}
+
+.btn-sbc-primary:hover {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  color: #003700;
+}
+
+.btn-sbc-outline {
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid #00fb00;
+}
+
+.btn-sbc-outline:hover {
+  background-color: #00fb00;
+  color: #000600;
+}
+
+.hero-logos-box {
+  background: rgba(255, 255, 255, 0.96);
+  border: 2px solid #00fb00;
+  border-radius: 10px;
+  padding: 24px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+}
+
+.hero-logos-box img {
+  max-height: 135px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* =========================================================
+   4. SEÇÕES E CARDS ESTILO KUBIO QUERY LOOP
+   ========================================================= */
+.kubio-section {
+  padding: 56px 0;
+}
+
+.kubio-section-alt {
+  background-color: rgb(var(--kubio-color-5-variant-2));
+  border-top: 1px solid #d5e8d8;
+  border-bottom: 1px solid #d5e8d8;
+}
+
+.kubio-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 30px;
+  border-left: 5px solid #007d00;
+  padding-left: 16px;
+}
+
+.kubio-section-header h2 {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #003700;
+}
+
+.kubio-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+  gap: 24px;
+}
+
+.kubio-post-card {
+  background: #ffffff;
+  border: 1px solid #d5e8d8;
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kubio-post-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(0, 55, 0, 0.12);
+  border-color: #007d00;
+}
+
+.kubio-card-banner {
+  background: linear-gradient(135deg, #003700, #007d00);
+  color: #ffffff;
+  padding: 18px 20px;
+  border-bottom: 3px solid #00fb00;
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.kubio-card-banner i {
+  color: #00fb00;
+  font-size: 18px;
+}
+
+.kubio-card-body {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.kubio-card-body h4 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #003700;
+  margin-bottom: 10px;
+  line-height: 1.35;
+}
+
+.kubio-card-body p {
+  font-size: 0.94rem;
+  color: #37473a;
+  margin-bottom: 18px;
+  flex: 1;
+}
+
+.kubio-read-more {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #ffffff;
+  background-color: #007d00;
+  padding: 9px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.kubio-read-more:hover {
+  background-color: #003700;
+  color: #00fb00;
+}
+
+/* =========================================================
+   5. PROGRAMAÇÃO E TABELA SBC (TablePress Style)
+   ========================================================= */
+.programacao-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+  gap: 24px;
+}
+
+.dia-card {
+  background: #ffffff;
+  border: 1px solid #c5dec9;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+}
+
+.dia-header {
+  background-color: #003700;
+  color: #ffffff;
+  padding: 14px 18px;
+  font-weight: 800;
+  font-size: 1rem;
+  border-bottom: 3px solid #00fb00;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dia-header i {
+  color: #00fb00;
+}
+
+.tablepress-sbc {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tablepress-sbc th {
+  background-color: #007d00;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 10px 14px;
+}
+
+.tablepress-sbc td {
+  padding: 11px 14px;
+  border-bottom: 1px solid #e6f2e8;
+  font-size: 14px;
+}
+
+.tablepress-sbc tr:nth-child(even) {
+  background-color: #f6fbf7;
+}
+
+.horario-cell {
+  font-weight: 700;
+  color: #003700;
+  white-space: nowrap;
+}
+
+.badge-tipo {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  background-color: #e3f9e5;
+  color: #005a00;
+}
+
+.badge-intervalo {
+  background-color: #000600;
+  color: #00fb00;
+}
+
+/* =========================================================
+   6. MAPA RESPONSIVO E LOCALIZAÇÃO
+   ========================================================= */
+.mapa-responsivo {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding-top: 42%;
+  min-height: 300px;
+  border-radius: 8px;
+  margin-top: 18px;
+  border: 2px solid #007d00;
+  box-shadow: 0 4px 16px rgba(0, 55, 0, 0.1);
+}
+
+.mapa-responsivo iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* =========================================================
+   7. FAIXA DESTAQUE SOL / ANAIS SBC
+   ========================================================= */
+.sbc-sol-banner {
+  background: linear-gradient(135deg, #003700 0%, #007d00 100%);
+  color: #ffffff;
+  padding: 48px 20px;
+}
+
+.sbc-sol-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.sbc-sol-inner h2 {
+  color: #00fb00;
+  font-size: 1.9rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.sbc-sol-inner p {
+  max-width: 720px;
+  color: #f0fdf1;
+  font-size: 1rem;
+}
+
+/* =========================================================
+   8. REALIZAÇÃO E RODAPÉ INSTITUCIONAL SBC
+   ========================================================= */
+.instituicoes-bar {
+  background: #ffffff;
+  padding: 40px 20px;
+  border-top: 2px solid #007d00;
+}
+
+.instituicoes-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 36px;
+  text-align: center;
+}
+
+.inst-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inst-group span.inst-label {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #003700;
+  background-color: #e3f9e5;
+  border-left: 4px solid #007d00;
+  padding: 4px 12px;
+  border-radius: 3px;
+  margin-bottom: 18px;
+}
+
+.inst-logos-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.inst-logo-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #e6f2e8;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.inst-logo-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 55, 0, 0.1);
+  border-color: #007d00;
+}
+
+.inst-logo-card img {
+  height: 82px;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+}
+
+.inst-logo-card img.logo-unifap-wide {
+  height: 76px;
+  max-width: 250px;
+}
+
+.wp-block-kubio-footer {
+  background-color: #000600;
+  color: #d1e3d4;
+  border-top: 4px solid #007d00;
+  padding: 36px 20px 24px;
+  font-size: 14px;
+}
+
+.footer-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.footer-grid h4 {
+  color: #00fb00;
+  font-size: 15px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 18px auto 0;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 13px;
+  color: #9cb3a0;
+}
+
+@media (max-width: 860px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .programacao-grid { grid-template-columns: 1fr; }
+  .sbc-smartslider-hero h1 { font-size: 2rem; }
+}
